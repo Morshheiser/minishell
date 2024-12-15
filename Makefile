@@ -1,37 +1,47 @@
-# Name of the executable
-NAME = minishell
+NAME	=	minishell
 
-# Compiler
-CC = cc
+CC		= 	cc
 
-# Compilation flags
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS	=	-Wall -Wextra -Werror -g
 
-# Source and object files
-SOURCES = main.c/
+RM		=	rm -f
 
-OBJECTS = $(SOURCES:.c=.o)
+LIBRARY	=	./libft/
 
-# Removal command
-RM = rm -rf
+SRCS	=	input_checker_functions.c\
+			input_tokenizator.c\
+			input_start_function.c\
+			env_function.c\
+			env_utils.c\
+			split_function.c\
+			split_utils.c\
+			main.c\
 
-# Compilation rules
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS)
+libft:
+	cd $(LIBRARY) && $(MAKE) bonus && cp -v libft.a ../
 
-# Rule to convert .c to .o
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+minishell: libft
+	cc -g $(SRCS) libft.a -lreadline -o $(NAME)
 
-# Clean object files
+run: re
+	./$(NAME)
+
+val: re
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supressions.supp --track-fds=yes ./$(NAME)
+
+norm:
+	@-norminette -R CheckForbiddenSourceHeader
+
 clean:
-	$(RM) $(OBJECTS)
+	cd $(LIBRARY) && $(MAKE) clean
 
-# Full clean, including the executable
-fclean: clean
+fclean:	clean
 	$(RM) $(NAME)
+	$(RM) libft.a
+	cd $(LIBRARY) && $(MAKE) fclean
 
-# Rebuild everything from scratch
-re: fclean all
+re:	fclean all
+
+.PHONY:	all clean fclean re libft
