@@ -122,7 +122,6 @@ char	*ft_get_env_variable(char **line, char **env)
     return (value);
 }
 
-
 char *ft_expand_env_variable(char **input, char **args, char **env)
 {
     char *result;

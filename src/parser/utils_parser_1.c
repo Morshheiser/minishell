@@ -113,43 +113,65 @@ int ft_configure_redirections(char *input, t_fd *fd_info, t_shell *shell)
     return (0);
 }
 
-t_cmd *ft_init_and_process_command(char *input, t_shell *shell, t_fd in_out[2]) {
-    printf("Debug: Inicializando comando com input: %s\n", input);
-    if (ft_configure_redirections(input, in_out, shell) < 0) {
-        printf("Debug: Falha na configuração de redirecionamento\n");
-        return ft_command_error(&in_out[IN], &in_out[OUT], NULL);
+t_cmd *ft_init_and_process_command(char *input, t_shell *shell)
+{
+    t_cmd  *cmd;
+    t_fd    in_out[2];
+    char    **args;
+
+    // Inicializando os descritores de arquivos para entrada e saída
+    in_out[IN].fnm = 0;
+    in_out[IN].ffd = -2;
+    in_out[OUT].fnm = 0;
+    in_out[OUT].ffd = -2;
+    args = 0;
+
+    // Configuração de redirecionamento
+    if (ft_configure_redirections(input, in_out, shell) < 0)
+    {
+        return (ft_command_error(&in_out[IN], &in_out[OUT], args));
     }
 
-    printf("Debug: Redirecionamento configurado com sucesso\n");
+    // Limpeza de redirecionamento
+    ft_clean_redirection_tokens(input);
 
-    char **args = ft_extract_command_arguments(input, shell);
-    if (!args) {
-        printf("Debug: Falha na extração dos argumentos\n");
-        return ft_command_error(&in_out[IN], &in_out[OUT], args);
+    // Extração dos argumentos do comando
+    args = ft_extract_command_arguments(input, shell);
+    if (!args)
+    {
+        return (ft_command_error(&in_out[IN], &in_out[OUT], args));
     }
 
-    printf("Debug: Argumentos extraídos com sucesso\n");
+    // Criação do comando com os argumentos extraídos
+    cmd = ft_create_new_command(&in_out[IN], &in_out[OUT], args);
+    if (!cmd)
+    {
+        cmd = ft_command_error(&in_out[IN], &in_out[OUT], args);
+    }
 
-    return ft_create_new_command(&in_out[IN], &in_out[OUT], args);
+    return (cmd);
 }
-
 
 t_cmd *ft_create_command_from_input(char *input, t_shell *shell)
 {
-    t_cmd   *cmd;
+    t_cmd  *cmd;
     t_fd    input_output[2];
+    char    **args;
 
-    printf("Creating command from input: '%s'\n", input);
-
+    // Inicializando os descritores de arquivos para entrada e saída
     input_output[IN].fnm = 0;
     input_output[IN].ffd = -2;
     input_output[OUT].fnm = 0;
     input_output[OUT].ffd = -2;
-    cmd = ft_init_and_process_command(input, shell, input_output);
+    args = 0;
+
+    // Processamento do comando com configuração de redirecionamento
+    cmd = ft_init_and_process_command(input, shell);
     if (!cmd)
     {
         printf("Error creating command. Returning error command.\n");
-        cmd = ft_command_error(&input_output[IN], &input_output[OUT], NULL);
+        cmd = ft_command_error(&input_output[IN], &input_output[OUT], args);
     }
+
     return (cmd);
 }

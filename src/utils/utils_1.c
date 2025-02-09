@@ -63,22 +63,33 @@ void ft_cmd_append(t_cmd **cmd_list, t_cmd *new_cmd)
     last->next = new_cmd;
 }
 
-
 void ft_clean_fd(t_fd *fd)
 {
-	if (!fd)
-		return ;
-	if ((fd->ffd != -1) && (fd->ffd != -2))
-	{
-		close(fd->ffd);
-		fd->ffd = -2;
-	}
-	if (fd->fnm)
-	{
-		free(fd->fnm);
-		fd->fnm = NULL;
-	}
+    if (!fd)
+    {
+        printf("ft_clean_fd: Ponteiro de fd é NULL\n");
+        return;
+    }
+
+    if (fd->ffd != -1 && fd->ffd != -2)
+    {
+        printf("ft_clean_fd: Fechando descritor de arquivo %d\n", fd->ffd);
+        close(fd->ffd);
+        fd->ffd = -2;
+    }
+
+    if (fd->fnm)
+    {
+        printf("ft_clean_fd: Liberando memória para o arquivo: %s\n", fd->fnm);
+        free(fd->fnm);  // Verifique aqui antes de liberar
+        fd->fnm = NULL;
+    }
+    else
+    {
+        printf("ft_clean_fd: Ponteiro fnm já é NULL, não liberando memória\n");
+    }
 }
+
 
 t_pid *ft_new_pid(int pid)
 {

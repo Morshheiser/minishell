@@ -5,8 +5,7 @@ void parse_input(char *line, t_shell *shell)
     char **args;
     t_cmd *no;
     int i;
-    t_fd in_out[2];
-
+   
     // Verificação de linha vazia, se o conteúdo da linha for inválido
     if (!*line)  // Corrigindo a condição de verificação para linha vazia
     {
@@ -29,16 +28,9 @@ void parse_input(char *line, t_shell *shell)
         // Verificando o conteúdo de cada comando
         printf("Comando %d: %s\n", i, args[i]);
 
-        // Inicializa o array de descritores de arquivos
-        in_out[0].ffd = shell->fd[0];
-        in_out[1].ffd = shell->fd[1];
-
-        // Verifique se o array de descritores de arquivos foi inicializado corretamente
-        printf("Início do descritor de entrada: %d, saída: %d\n", in_out[0].ffd, in_out[1].ffd);
-
         // Inicializa e processa o comando atual
         printf("Processando comando: %s\n", args[i]);
-        no = ft_init_and_process_command(args[i], shell, in_out);
+        no = ft_init_and_process_command(args[i], shell);
 
         // Verificando se houve erro ao inicializar o comando
         if (!no)
@@ -66,7 +58,7 @@ void parse_input(char *line, t_shell *shell)
     }
 
     // Limpando a memória do array de comandos
-    ft_clean_split(args);
+    args = ft_clean_split(args);
     printf("Memória limpa para os comandos splitados.\n");
 
     // Verificando o conteúdo final de shell->cmd

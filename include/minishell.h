@@ -169,12 +169,14 @@ char	*ft_find_exit_status(char **line, int i);
 char	*ft_get_env_in_brackets(char **line, char **envp);
 char *ft_get_arg_value(char **line, char **argv);
 char	*ft_get_env_variable(char **line, char **env);
+
 char *ft_expand_env_variable(char **input, char **args, char **env);
 
 // .src/expansion/utils_expansion/utils_expan_2.c
 int ft_check_double_quote_syntax(char *str);
 int ft_expand_within_quotes(char *line, char **result, char **args, char **env);
 char *ft_expand_double_quotes(char **input, char **args, char **env);
+
 char *ft_expand_single_quotes(char **line);
 char *ft_expand_plain_text(char **line, char *eofs);
 
@@ -231,7 +233,7 @@ static char	*ft_resolve_filename(char *input, t_shell *shell);
 static int	ft_input_redirection(char *filename, t_fd *fd_info, int operator, t_shell *shell);
 static int	ft_output_redirection(char *filename, t_fd *fd_info, int operator, t_shell *shell);
 int ft_configure_redirections(char *input, t_fd *fd_info, t_shell *shell);
-t_cmd	*ft_init_and_process_command(char *input, t_shell *shell, t_fd in_out[2]);
+t_cmd	*ft_init_and_process_command(char *input, t_shell *shell);
 t_cmd	*ft_create_command_from_input(char *input, t_shell *shell);
 
 // .src/parser/utils_parser_2.c

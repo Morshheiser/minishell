@@ -70,7 +70,7 @@ char *ft_expand_double_quotes(char **input, char **args, char **env)
     printf("Iniciando expansão de aspas duplas. Linha inicial: '%s'\n", line);
 
     // Avançando para após a primeira aspa dupla
-    line++;
+   // line++;
 
     // Verificando a sintaxe das aspas duplas
     printf("Verificando a sintaxe das aspas duplas...\n");
