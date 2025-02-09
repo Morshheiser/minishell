@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "minishell.h": "c",
+<<<<<<< HEAD
+        "libft.h": "c",
+        "unistd.h": "c"
+=======
+        "libft.h": "c"
+>>>>>>> bbc9d8a7451c87b36a36fc4bab32026f971764ef
+    }
+}
