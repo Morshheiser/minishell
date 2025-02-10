@@ -24,7 +24,7 @@ char	*ft_get_env_in_brackets(char **line, char **envp)
 
     // Debug: Exibindo a linha atual
     printf("Chamando ft_get_env_in_brackets com linha: '%s'\n", *line);
-
+    (void) envp;
     ret = ft_isolate(line, &temp);  // Separa a variável entre as chaves
     if (!ret)
     {
@@ -59,7 +59,7 @@ char *ft_get_arg_value(char **line, char **argv)
     char *result;
     char *index_str;
 
-    result = NULL;
+    result = 0;
     *line += 1;  // Avança para o índice após o '$'
     index_str = ft_substr(*line, 0, 1);  // Extrai o índice como string
     if (!index_str)
@@ -69,12 +69,9 @@ char *ft_get_arg_value(char **line, char **argv)
     printf("Índice extraído: '%s'\n", index_str);
 
     target_index = atoi(index_str);  // Converte o índice para inteiro
-    free(index_str);
-    
     // Debug: Exibindo o índice alvo
     printf("Índice alvo: %d\n", target_index);
-
-    while (argv[index])
+    while ((*argv)[index])
     {
         if (index == target_index)
         {
@@ -90,7 +87,7 @@ char *ft_get_arg_value(char **line, char **argv)
         printf("Valor do argumento: '%s'\n", result);
     else
         printf("Argumento não encontrado\n");
-
+    free(index_str);
     return (result);
 }
 
@@ -129,35 +126,20 @@ char *ft_expand_env_variable(char **input, char **args, char **env)
 
     result = NULL;
     next_char = *(*input + 1);
-
-    // Debug: Exibindo o próximo caractere após o '$'
-    printf("Próximo caractere após '$': '%c'\n", next_char);
-
-    if (next_char == '?') 
-    {
-        result = ft_find_exit_status(input, status_g);  // Expansão para o status de saída
-    }
-    else if (next_char == '{') 
-    {
-        result = ft_get_env_in_brackets(input, env);  // Expansão para variáveis no formato ${VAR}
-    }
+    if (next_char == '?')
+        result = ft_find_exit_status(input, status_g);
+    else if (next_char == '{')
+        result = ft_get_env_in_brackets(input, env);
     else if (ft_isdigit(next_char))
-    {
-        result = ft_get_arg_value(input, args);  // Expansão para argumentos numéricos ($1, $2, etc.)
-    }
+        result = ft_get_arg_value(input, args);
     else if (ft_isalpha(next_char) || next_char == '_')
-    {
-        result = ft_get_env_variable(input, env);  // Expansão para variáveis de ambiente ($VAR)
-    }
+            result = ft_get_env_variable(input, env);
     else
     {
-        result = ft_strdup("$");  // Caso não seja um tipo conhecido de variável
+        result = ft_strdup("$");
         *input += 1;
     }
-
-    // Debug: Exibindo o resultado da expansão
     printf("Resultado da expansão: '%s'\n", result);
-
     return result;
 }
 

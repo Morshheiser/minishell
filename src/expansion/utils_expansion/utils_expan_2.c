@@ -3,97 +3,87 @@
 // Função para verificar a sintaxe das aspas duplas
 int ft_check_double_quote_syntax(char *str)
 {
-    int i = 0;
-    int quote_count = 0;
+    int i;
+    int quote_count;
 
-    printf("Iniciando a verificação de sintaxe das aspas duplas para a string: %s\n", str);
-
-    // Verificando as aspas duplas
-    while (str[i]) {
-        if (str[i] == '\"') {
+    i = 0;
+    quote_count = 0;
+    while (str[i])
+    {
+        if (str[i] == '\"')
             quote_count++;
-        }
         i++;
     }
-
-    printf("Número de aspas duplas encontradas: %d\n", quote_count);
-
-    // Verificando se as aspas duplas estão balanceadas
-    if (quote_count % 2 != 0) {
-        printf("Erro de sintaxe: aspas duplas desbalanceadas.\n");
-        ft_perror(0, "syntax_error", "mismatched double quotes");
+    if (quote_count % 2 != 0)
+    {
+        ft_perror(0, "syntax_error", "aspas duplas desbalanceadas.");
         return 0;
     }
-
-    printf("Aspas duplas balanceadas.\n");
     return 1;
 }
-
+/*
 // Função para expandir o conteúdo dentro das aspas duplas
-int ft_expand_within_quotes(char *line, char **result, char **args, char **env)
+char *ft_expand_within_quotes(char **input, char **args, char **env)
 {
-    int i = 0;
-    char *temp;
+    char    *str = 0;
+    char    *line_tmp = NULL;
 
-    printf("Iniciando a expansão dentro das aspas: '%s'\n", line);
-
-    while (line[i] && line[i] != '\"') {
-        printf("Analisando caractere '%c' na posição %d\n", line[i], i); 
-
-        // Se encontrar o sinal de dólar para variável
-        if (line[i] == '$') {
-            printf("Detectado '$' na posição %d. Iniciando expansão de variável...\n", i);
-            temp = ft_expand_env_variable(&line, args, env);
-        }
-        // Caso contrário, tratar como texto simples
-        else {
-            printf("Texto simples detectado. Iniciando expansão...\n");
-            temp = ft_expand_plain_text(&line, "$\"");
-        }
-
-        printf("Concatenando com o resultado. Resultado parcial: '%s'\n", *result);
-        *result = ft_merge_strings(*result, temp);
-        i++;
-    }
-
-    printf("Resultado final após expansão dentro das aspas: '%s'\n", *result);
-    return i;
+   	while (*(*input) && (*(*input) != '\"'))
+	{
+		if (*(*input) == '$')
+			line_tmp = ft_expand_env_variable(input, args, env);
+		else
+			line_tmp = ft_expand_plain_text(input, "$\"");
+        str = ft_merge_strings(str, line_tmp);
+	}
+   return (str);
 }
 
 // Função para expandir as aspas duplas
 char *ft_expand_double_quotes(char **input, char **args, char **env)
 {
-    char *result = NULL;
-    char *line = *input;
-    int i;
+    char *result;
 
-    printf("Iniciando expansão de aspas duplas. Linha inicial: '%s'\n", line);
-
-    // Avançando para após a primeira aspa dupla
-   // line++;
-
-    // Verificando a sintaxe das aspas duplas
-    printf("Verificando a sintaxe das aspas duplas...\n");
-    if (!ft_check_double_quote_syntax(line)) {
-        printf("Erro de sintaxe nas aspas duplas. Saindo da função.\n");
-        return NULL;
-    }
-
-    printf("Sintaxe das aspas duplas está correta, iniciando expansão...\n");
-
-    i = ft_expand_within_quotes(line, &result, args, env);
-
-    *input = line + i;
-
-    if (!result || !*result) {
-        printf("Resultado vazio ou NULL após expansão, alocando espaço vazio\n");
+    if (!ft_check_double_quote_syntax(*input))
+        return 0;
+    *input = *input + 1;
+    result = ft_expand_within_quotes(input, args, env);
+    if (*(*input))
+		*(input)++;
+    if (!result || !*result) 
+    {
         free(result);
         result = ft_calloc(1, 1);
     }
-
     printf("Resultado final após expansão de aspas duplas: '%s'\n", result);
-
     return result;
+}*/
+
+char *ft_expand_double_quotes(char **input, char **argv, char **env)
+{
+	char	*str;
+	char	*tmp;
+
+	str = 0;
+	if (!ft_check_double_quote_syntax(*input))
+		return (0);
+    *input += 1;
+	while (*(*input) && (*(*input) != '\"'))
+	{
+		if (*(*input) == '$')
+			tmp = ft_expand_env_variable(input, argv, env);
+		else
+			tmp = ft_expand_plain_text(input, "$\"");
+        str = ft_merge_strings(str, tmp);
+	}
+	if (*(*input))
+		*input += 1;
+	if (!str || !*str)
+	{
+		free (str);
+		str = ft_calloc(1, 1);
+	}
+	return (str);
 }
 
 char *ft_expand_single_quotes(char **line)

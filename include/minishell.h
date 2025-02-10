@@ -136,8 +136,8 @@ long long int	ft_atolli(const char *str);
 // .src/env/utils_env_2.c
 char	*ft_find_env(char *key, char **env);
 char	*ft_find_env_value(char *key, char **env);
-void	ft_init_env(t_env **env, char **envp);
 void	ft_free_arr(char **arr);
+void    ft_initialize_env(t_env **env, char **envp);
 
 // .src/env/utils_env_3.c
 int ft_vetor_size(char **ev);
@@ -174,8 +174,8 @@ char *ft_expand_env_variable(char **input, char **args, char **env);
 
 // .src/expansion/utils_expansion/utils_expan_2.c
 int ft_check_double_quote_syntax(char *str);
-int ft_expand_within_quotes(char *line, char **result, char **args, char **env);
-char *ft_expand_double_quotes(char **input, char **args, char **env);
+//char *ft_expand_within_quotes(char **input, char **args, char **env);
+char *ft_expand_double_quotes(char **line, char **argv, char **env);
 
 char *ft_expand_single_quotes(char **line);
 char *ft_expand_plain_text(char **line, char *eofs);

@@ -3,37 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: penascim <penascim@student.42.rio>         +#+  +:+       +#+        */
+/*   By: emorshhe <emorshhe>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:15:26 by penascim          #+#    #+#             */
-/*   Updated: 2023/11/15 18:15:30 by penascim         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:42:31 by emorshhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char *ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	len;
-	size_t	i;
-	size_t	j;
-	char	*newstr;
+    size_t len;
+    size_t i = 0;
+    size_t j = 0;
+    char *newstr;
 
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	len = (ft_strlen(s1) + ft_strlen(s2));
-	i = 0;
-	j = 0;
-	newstr = malloc(sizeof(char) * (len + 1));
-	if (!newstr)
-		return (NULL);
-	while (s1[i] != '\0')
+
+    if (!s1)
+        s1 = "";
+    if (!s2)
+        s2 = "";
+    len = ft_strlen(s1) + ft_strlen(s2);
+    newstr = malloc(sizeof(char) * (len + 1));
+    if (!newstr)
+        return ((void *)0);
+    if (s1)
 	{
-		newstr[i] = s1[i];
-		i++;
+    	while (s1[i] != '\0')
+    	{
+    	    newstr[i] = s1[i];
+        	i++;
+    	}
 	}
-	while (s2[j] != '\0')
-		newstr[i++] = s2[j++];
-	newstr[i] = '\0';
-	return (newstr);
+	if (s2)
+	{
+    	while (s2[j] != '\0')
+    	{
+        	newstr[i] = s2[j];
+        	i++;
+        	j++;
+    	}
+	}
+    newstr[i] = '\0';
+    return newstr;
 }

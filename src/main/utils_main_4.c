@@ -12,7 +12,7 @@ t_shell start_function(char **argv, char **env)
     shell.env = malloc(sizeof(t_env));
     if (!shell.env)
         exit(EXIT_FAILURE);
-    ft_init_env(&shell.env, env);
+    ft_initialize_env(&shell.env, env);
     return (shell);
 }
 

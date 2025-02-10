@@ -1,13 +1,12 @@
 #include "../../include/minishell.h"
-#include "../../include/minishell.h"
 
 int ft_vetor_size(char **ev)
 {
-    int i = 0;
-    printf("[DEBUG] Calculando o tamanho do vetor...\n");
+    int i;
+
+    i = 0;
     while (ev[i])
         i++;
-    printf("[DEBUG] Tamanho do vetor: %d\n", i);
     return i;
 }
 
@@ -17,65 +16,65 @@ void ft_env_addback(t_env *env, char *key, char *value)
     int list_size;
     char **new_list;
 
-    if (!env || !key || !value) {
-        printf("[DEBUG] Parâmetros inválidos na função ft_env_addback.\n");
+    if (!env || !key || !value)
         return;
-    }
-
     list_size = ft_vetor_size(env->var_list);
-    printf("[DEBUG] Tamanho da lista de variáveis de ambiente: %d\n", list_size);
-    
     new_list = malloc(sizeof(char *) * (list_size + 2));
-    if (!new_list) {
-        printf("[DEBUG] Erro ao alocar memória para nova lista.\n");
+    if (!new_list)
         return;
-    }
-
-    printf("[DEBUG] Alocação de nova lista bem-sucedida.\n");
-
     i = -1;
-    while (++i < list_size) {
-        printf("[DEBUG] Copiando variável de ambiente: %s\n", env->var_list[i]);
+    while (++i < list_size)
         new_list[i] = env->var_list[i];
-    }
-
-    // Concatenando key e value
     new_list[list_size] = ft_strjoin(key, "=");
-    printf("[DEBUG] String concatenada (key + '='): %s\n", new_list[list_size]);
-
     new_list[list_size] = ft_strjoin(new_list[list_size], value);
-    printf("[DEBUG] String final (key + '=' + value): %s\n", new_list[list_size]);
-
     new_list[list_size + 1] = NULL;
-    printf("[DEBUG] Adicionando NULL ao final da nova lista.\n");
-
-    free(env->var_list);
+     free(env->var_list);
     env->var_list = new_list;
-
     printf("[DEBUG] Variável de ambiente adicionada com sucesso!\n");
 }
 
 void ft_free_env(t_env *env)
 {
-    int i = 0;
-    if (!env || !env->var_list) {
-        printf("[DEBUG] Nenhuma variável de ambiente para liberar.\n");
+    int i;
+    
+    i = 0;
+    if (!env || !env->var_list)
         return;
-    }
-
-    printf("[DEBUG] Liberando variáveis de ambiente...\n");
-
     while (env->var_list && env->var_list[i]) {
-        printf("[DEBUG] Liberando variável de ambiente: %s\n", env->var_list[i]);
         free(env->var_list[i]);
         i++;
     }
     free(env->var_list);
 
-    if (env->pwd) {
-        printf("[DEBUG] Liberando pwd: %s\n", env->pwd);
+    if (env->pwd)
         free(env->pwd);
-    }
-
     printf("[DEBUG] Variáveis de ambiente liberadas com sucesso!\n");
+}
+
+void    ft_initialize_env(t_env **env, char **env_array)
+{
+    char    *pwd;
+    int     i;
+    int     srch_len;
+
+    (*env) = malloc(sizeof(t_env));
+    if (!(*env))
+        return ;
+    (*env)->var_list = ft_arr_copy(env_array, 0);
+    pwd = NULL;
+    srch_len = ft_strlen("PWD");
+    i = -1;
+    while ((*env)->var_list[++i])
+    {
+        if (ft_strncmp((*env)->var_list[i], "PWD", srch_len) == 0
+         && (*env)->var_list[i][srch_len] == '=')
+        {
+            pwd = (*env)->var_list[i];
+            break;
+        }
+    }
+    if (pwd)
+        (*env)->pwd = ft_strdup(pwd + 4);
+    else
+        (*env)->pwd = getcwd(NULL, 0);
 }
