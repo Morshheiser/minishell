@@ -1,0 +1,46 @@
+TUTORIAL DE USO:
+Como usar a sua branch:
+
+1. Para fazer checkout:
+   > git checkout SUABRANCH
+
+2. Para commitar:
+   > git add .
+   > git commit -m "Descrição do seu commit"
+
+3. Para fazer o push na sua branch:
+   > git push origin SUABRANCH
+
+--------------------------------------------------------------------------
+
+4. Para atualizar a branch principal (main):
+- PRIMEIRO É NECESSÁRIO ALGUMAS PREPARAÇÕES:
+	a. Faça o checkout da branch principal (main):
+	> git checkout main
+
+	b. Traga as últimas atualizações da branch principal:
+	> git pull origin main
+
+	c. Volte para sua branch:
+	> git checkout SUABRANCH
+
+	d. Faça o merge das mudanças da branch principal na sua
+	branch (caso haja algum conflito, resolva-o):
+	> git merge main
+
+	e. Após o merge, faça o push novamente para a sua branch:
+<<<<<<< HEAD
+	> git push origin emorshhe
+=======
+	> git push origin SUABRANCH
+>>>>>>> main
+
+- PARA DE FATO ATUALIZAR A BRANCH PRINCIPAL(MAIN):
+	a. Faça o checkout da `main`:
+	> git checkout main
+
+	b. Faça o merge da sua branch na `main`:
+	> git merge SUABRANCH
+
+	Por fim, faça o push das alterações para a main:
+	> git push origin main

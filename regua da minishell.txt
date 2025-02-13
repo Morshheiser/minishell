@@ -1,0 +1,161 @@
+Parte Obrigatória
+Compilação
+    • Use make -n para verificar se a compilação usa -Wall -Wextra -Werror. Se não usar, selecione a opção "compilação inválida".
+    • O minishell deve compilar sem erros. Se houver erros, selecione a opção "compilação inválida".
+    • O Makefile não deve recompilar desnecessariamente. Se isso acontecer, selecione a opção "compilação inválida".
+✅ Sim
+❌ Não
+
+Comando Simples e Variáveis Globais
+    • Execute um comando simples com um caminho absoluto, como /bin/ls, sem opções.
+    • Pergunte ao estudante quantas variáveis globais foram usadas e peça um exemplo concreto de por que elas são necessárias.
+    • Teste um comando vazio.
+    • Teste entradas contendo apenas espaços ou tabulações.
+    • Se o programa travar, selecione a opção "crash".
+    • Se algo não funcionar corretamente, selecione a opção "trabalho incompleto".
+✅ Sim
+❌ Não
+
+Argumentos
+    • Execute um comando simples com um caminho absoluto e argumentos, sem aspas.
+    • Repita várias vezes com diferentes comandos e argumentos.
+    • Se o programa travar, selecione a opção "crash".
+    • Se algo não funcionar corretamente, selecione a opção "trabalho incompleto".
+✅ Sim
+❌ Não
+
+Comando echo
+    • Teste o comando echo com e sem argumentos, e com a opção -n.
+    • Repita o teste várias vezes com diferentes argumentos.
+    • Se o programa travar, selecione a opção "crash".
+    • Se algo não funcionar corretamente, selecione a opção "trabalho incompleto".
+✅ Sim
+❌ Não
+
+Comando exit
+    • Execute exit com e sem argumentos.
+    • Teste várias vezes com diferentes argumentos.
+    • Reinicie o minishell após cada teste.
+    • Se o programa travar, selecione a opção "crash".
+    • Se algo não funcionar corretamente, selecione a opção "trabalho incompleto".
+✅ Sim
+❌ Não
+
+Valor de Retorno de um Processo
+    • Execute um comando como /bin/ls e depois echo $?.
+    • Compare o resultado com o comportamento do Bash.
+    • Teste comandos incorretos, como /bin/ls filethatdoesntexist.
+    • Teste expressões como expr $? + $?.
+    • Se o programa travar, selecione a opção "crash".
+    • Se algo não funcionar corretamente, selecione a opção "trabalho incompleto".
+✅ Sim
+❌ Não
+
+Sinais (ctrl-C, ctrl-D, ctrl-\)
+    • ctrl-C em um prompt vazio deve mostrar uma nova linha com um novo prompt.
+    • ctrl-\ em um prompt vazio não deve fazer nada.
+    • ctrl-D em um prompt vazio deve sair do minishell.
+    • ctrl-C após digitar algo deve exibir um novo prompt e limpar o buffer.
+    • ctrl-D após digitar algo não deve fazer nada.
+    • ctrl-\ após digitar algo não deve fazer nada.
+    • Teste ctrl-C, ctrl-\ e ctrl-D ao executar um comando bloqueante como cat ou grep "algo".
+    • Repita os testes com diferentes comandos.
+    • Se o programa travar, selecione a opção "crash".
+    • Se algo não funcionar corretamente, selecione a opção "trabalho incompleto".
+✅ Sim
+❌ Não
+
+Aspas Duplas (")
+    • Execute comandos com argumentos que incluam aspas duplas e espaços.
+    • Teste comandos como:
+      sh
+      CopiarEditar
+      echo "cat lol.c | cat > lol.c"
+    • Evite testar variáveis ($).
+    • Se o programa travar, selecione a opção "crash".
+    • Se algo não funcionar corretamente, selecione a opção "trabalho incompleto".
+✅ Sim
+❌ Não
+
+Aspas Simples (')
+    • Execute comandos com argumentos entre aspas simples.
+    • Teste argumentos vazios.
+    • Teste variáveis de ambiente, espaços, pipes e redirecionamentos dentro das aspas.
+    • echo '$USER' deve imprimir "$USER" literalmente, sem interpretar a variável.
+✅ Sim
+❌ Não
+
+Comando env
+    • O comando env deve exibir as variáveis de ambiente atuais.
+✅ Sim
+❌ Não
+
+Comando export
+    • Exporte novas variáveis de ambiente e substitua antigas.
+    • Verifique o resultado com env.
+✅ Sim
+❌ Não
+
+Comando unset
+    • Use unset para remover variáveis de ambiente.
+    • Verifique o resultado com env.
+✅ Sim
+❌ Não
+
+Comando cd
+    • Use cd para mudar de diretório e verifique com /bin/ls.
+    • Teste com diretórios existentes e inexistentes.
+    • Teste . e .. como argumentos.
+✅ Sim
+❌ Não
+
+Comando pwd
+    • Use pwd e repita em diferentes diretórios.
+✅ Sim
+❌ Não
+
+Caminho Relativo
+    • Execute comandos usando caminhos relativos.
+    • Teste com caminhos complexos (../..).
+✅ Sim
+❌ Não
+
+Variável PATH
+    • Execute comandos sem especificar o caminho (ls, wc, awk).
+    • Unset $PATH e verifique se os comandos param de funcionar.
+    • Redefina $PATH com múltiplos diretórios e verifique a ordem de busca.
+✅ Sim
+❌ Não
+
+Redirecionamento (<, >, >>, <<)
+    • Teste redirecionamentos simples (> e <).
+    • Teste redirecionamento com >>.
+    • Teste << (não precisa atualizar o histórico).
+✅ Sim
+❌ Não
+
+Pipes (|)
+    • Teste pipes como:
+      sh
+      CopiarEditar
+      cat file | grep bla | more
+    • Teste comandos incorretos dentro de pipes (ls filethatdoesntexist | grep bla | more).
+    • Teste pipes combinados com redirecionamento.
+✅ Sim
+❌ Não
+
+Histórico e Comandos Inválidos
+    • Digite um comando, pressione ctrl-C, e pressione "Enter". O buffer deve estar limpo.
+    • Use as setas para cima e para baixo para navegar no histórico.
+    • Teste comandos inválidos (dsbksdgbksdghsd). O minishell não deve travar e deve exibir um erro.
+    • Teste cat | cat | ls. Deve se comportar normalmente.
+    • Execute um comando longo com muitos argumentos.
+✅ Sim
+❌ Não
+
+Variáveis de Ambiente
+    • Teste echo com variáveis de ambiente ($VAR).
+    • Verifique se $ é interpretado corretamente.
+    • echo "$USER" deve imprimir o valor de USER.
+✅ Sim
+❌ Não
