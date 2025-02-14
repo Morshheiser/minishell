@@ -8,7 +8,7 @@ void parse_input(char *line, t_shell *shell)
 
     if (!line || !*line)
         return ;
-    args = ft_split_pipe(line, "|");
+    args = ft_split_with_set(line, "|");
     if (!args)
         return;
     i = 0;

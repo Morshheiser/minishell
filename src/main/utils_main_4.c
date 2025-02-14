@@ -45,7 +45,7 @@ static void ft_error_handler_sigint(int sig)
 		}
 		else
 		{
-			write(STDOUT_FILENO, "\n", 1);
+			ioctl(STDIN_FILENO, TIOCSTI, "\n");
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			//ft_status_g(USED_CTRL_C);

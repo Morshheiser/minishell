@@ -231,7 +231,7 @@ void ft_status_g(int new_status);
 void parse_input(char *line, t_shell *shell);
 
 // .src/parser/utils_parser_1.c
-static char	*ft_resolve_filename(char *input, t_shell *shell);
+static char	*ft_set_filename(char *input, t_shell *shell);
 static int	ft_input_redirection(char *filename, t_fd *fd_info, int operator, t_shell *shell);
 static int	ft_output_redirection(char *filename, t_fd *fd_info, int operator, t_shell *shell);
 int ft_configure_redirections(char *input, t_fd *fd_info, t_shell *shell);
@@ -273,7 +273,7 @@ char	*ft_get_env(char *key, char **env);
 int ft_count_pipe(char *str);
 int	ft_find_quote_end(char *str);
 char **ft_allocate_split(char *line, const char *set);
-char **ft_split_pipe(char *line, const char *set);
+char **ft_split_with_set(char *line, const char *set);
 void change_flag(char c, int *single_flag, int *double_flag);
 
 // .src/utils/utils_split_pipe_2.c

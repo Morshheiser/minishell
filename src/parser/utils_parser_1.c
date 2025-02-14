@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-static char *ft_resolve_filename(char *input, t_shell *shell)
+static char *ft_set_filename(char *input, t_shell *shell)
 {
     char    *temp;
     char    *filename;
@@ -23,7 +23,7 @@ static char *ft_resolve_filename(char *input, t_shell *shell)
     temp = ft_substr(input, 0, i);
     filename = ft_expand_variables(temp, shell->argv, shell->env->var_list);
     free(temp);
-    return (ft_check_alloc(filename, "resolve_filename"));
+    return (ft_check_alloc(filename, "set_filename"));
 }
 
 static int ft_input_redirection(char *filename, t_fd *fd, int operator, t_shell *shell)
@@ -34,7 +34,7 @@ static int ft_input_redirection(char *filename, t_fd *fd, int operator, t_shell 
     {
         if (operator == 2)
         {
-            temp_fd.fnm = ft_resolve_filename(filename, shell);
+            temp_fd.fnm = ft_set_filename(filename, shell);
             if (!temp_fd.fnm)
                 return (-1);
             temp_fd.ffd = ft_heredoc(temp_fd.fnm);
@@ -43,7 +43,7 @@ static int ft_input_redirection(char *filename, t_fd *fd, int operator, t_shell 
         return (0);
     }
     ft_clean_fd(&fd[IN]);
-    fd[IN].fnm = ft_resolve_filename(filename, shell);
+    fd[IN].fnm = ft_set_filename(filename, shell);
     if (!fd[IN].fnm)
         return (-1);
     if (operator == 1)
@@ -58,7 +58,7 @@ static int ft_output_redirection(char *filename, t_fd *fd, int operator, t_shell
     if ((fd[IN].ffd != -1) && (fd[OUT].ffd != -1))
     {
         ft_clean_fd(&fd[OUT]);
-        fd[OUT].fnm = ft_resolve_filename(filename, shell);
+        fd[OUT].fnm = ft_set_filename(filename, shell);
         if (!fd[OUT].fnm)
             return (-1);
         if (operator == 1)
@@ -103,6 +103,26 @@ int ft_configure_redirections(char *input, t_fd *fd, t_shell *shell)
     return (0);
 }
 
+t_cmd *ft_create_command_from_input(char *input, t_shell *shell)
+{
+    t_cmd  *cmd;
+    t_fd    in_out[2];
+    char    **args;
+
+    in_out[IN].fnm = 0;
+    in_out[IN].ffd = -2;
+    in_out[OUT].fnm = 0;
+    in_out[OUT].ffd = -2;
+    args = 0;
+    cmd = ft_init_and_process_command(input, shell);
+    if (!cmd)
+    {
+        printf("Error creating command. Returning error command.\n");
+        cmd = ft_command_error(&in_out[IN], &in_out[OUT], args);
+    }
+    return (cmd);
+}
+
 t_cmd *ft_init_and_process_command(char *input, t_shell *shell)
 {
     t_cmd  *cmd;
@@ -124,25 +144,5 @@ t_cmd *ft_init_and_process_command(char *input, t_shell *shell)
     cmd = ft_create_new_command(&in_out[IN], &in_out[OUT], args);
     if (!cmd)
         cmd = ft_command_error(&in_out[IN], &in_out[OUT], args);
-    return (cmd);
-}
-
-t_cmd *ft_create_command_from_input(char *input, t_shell *shell)
-{
-    t_cmd  *cmd;
-    t_fd    in_out[2];
-    char    **args;
-
-    in_out[IN].fnm = 0;
-    in_out[IN].ffd = -2;
-    in_out[OUT].fnm = 0;
-    in_out[OUT].ffd = -2;
-    args = 0;
-    cmd = ft_init_and_process_command(input, shell);
-    if (!cmd)
-    {
-        printf("Error creating command. Returning error command.\n");
-        cmd = ft_command_error(&in_out[IN], &in_out[OUT], args);
-    }
     return (cmd);
 }

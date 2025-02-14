@@ -5,8 +5,8 @@ static int	ft_return_heredoc(int fd[2])
 	printf("ft_return_heredoc: Closing fd[OUT] and returning fd[IN]\n");
 	close (fd[OUT]);
 	return (fd[IN]);
-}
-*/
+}*/
+
 static int	ft_read_heredoc(int fd, char *end_of_file)
 {
 	char	*line;
@@ -19,18 +19,15 @@ static int	ft_read_heredoc(int fd, char *end_of_file)
 		if (!line)
 		{
 			ft_perror(0,"ft_read_heredoc: End of input (EOF) reached\n", end_of_file);
-			break ;
+			return (1);
 		}
-		if (!ft_strncmp(end_of_file, line, eof_len + 1))
-		{
-			ft_perror(0,"ft_read_heredoc: End of file detected. Breaking loop.\n", end_of_file);
-			free(line);
+		if (!ft_strncmp(end_of_file, line, eof_len))
 			break ;
-		}
 		else
 			ft_putendl_fd(line, fd);
 		free(line);
 	}
+	free(line);
 	return (0);
 }
 
@@ -84,7 +81,7 @@ char	**ft_extract_command_arguments(char *line, t_shell *shell)
 	char	**args;
 	int		i;
 
-	args = ft_split_pipe(line, " \t\n\v\f\r");
+	args = ft_split_with_set(line, " \t\n\v\f\r");
 	if (!args)
 	{
 		printf("ft_extract_command_arguments: Failed to split line into arguments\n");
@@ -144,4 +141,42 @@ t_cmd	*ft_create_new_command(t_fd *in, t_fd *out, char **args)
 		arg->next = 0;
 	}
 	return (ft_check_alloc(arg, "create_new_command"));
+}
+
+char **ft_split_with_set(char *line, const char *set)
+{
+    char **split;
+    int i = 0;
+    int len;
+    int num_words;
+
+    split = ft_allocate_split(line, set);
+    if (!split)
+        return NULL;
+    num_words = ft_count_word(line, set);
+    while (i < num_words)
+    {
+        while (ft_strchr(set, *line))
+            line++;
+        len = ft_len_word(line, set);
+        split[i] = ft_sub_word(line, len);
+        if (!*(split)[i])
+            return (ft_free_splterr(split));
+        line += len;
+        i++;
+    }
+    split[i] = NULL;
+    return split;
+}
+
+char **ft_allocate_split(char *line, const char *set)
+{
+    char **split;
+    int words;
+
+    if (!line || !set)
+        return NULL;
+    words = ft_count_word(line, set);
+    split = ft_calloc(words + 1, sizeof(char *));
+    return split;
 }
