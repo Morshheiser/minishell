@@ -8,39 +8,57 @@ RM		=	rm -f
 
 LIBRARY	=	./libft/
 
-SRCS	=	./src/builtins/cmd_builtin/cd.c\
-			./src/builtins/cmd_builtin/echo.c\
-			./src/builtins/cmd_builtin/env.c\
-			./src/builtins/cmd_builtin/exit.c\
-			./src/builtins/cmd_builtin/export.c\
-			./src/builtins/ft_builtin.c\
-			./src/builtins/cmd_builtin/pwd.c\
-			./src/builtins/cmd_builtin/unset.c\
-			./src/env/utils_env_1.c\
-			./src/env/utils_env_2.c\
-			./src/env/utils_env_3.c\
-			./src/executer/ft_executer.c\
-			./src/executer/utils_exec.c\
+SRCS	=	./src/builtins/ft_cd.c\
+			./src/builtins/ft_echo.c\
+			./src/builtins/ft_env.c\
+			./src/builtins/ft_exit.c\
+			./src/builtins/ft_export.c\
+			./src/builtins/ft_builtins.c\
+			./src/builtins/ft_pwd.c\
+			./src/builtins/ft_unset.c\
+			./src/cleanup/cleanup_cmd.c\
+			./src/cleanup/cleanup_env.c\
+			./src/cleanup/cleanup_fd.c\
+			./src/cleanup/cleanup_shell.c\
+			./src/data/ft_allocutils.c\
+			./src/data/ft_cmdutils.c\
+			./src/data/ft_fdutils.c\
+			./src/data/ft_getenvp.c\
+			./src/data/ft_pidutils.c\
+			./src/data/ft_shellutils.c\
+			./src/data/ft_strutils.c\
+			./src/env/ft_arr_cpy.c\
+			./src/env/ft_arr_free.c\
+			./src/env/ft_arr_size.c\
+			./src/env/ft_arr_srch.c\
+			./src/env/ft_atolli.c\
+			./src/env/ft_find_env.c\
+			./src/env/ft_init_env.c\
+			./src/executor/ft_executer.c\
+			./src/executor/ft_executorutils.c\
+			./src/executor/ft_getpathname.c\
 			./src/expansion/ft_expansion.c\
-			./src/expansion/utils_expansion/utils_expan_1.c\
-			./src/expansion/utils_expansion/utils_expan_2.c\
-			./src/expansion/utils_expansion/utils_expan_3.c\
-			./src/lexer/ft_check_lexer.c\
-			./src/lexer/lexer.c\
+			./src/expansion/ft_expnd_dquote.c\
+			./src/expansion/ft_expnd_env.c\
+			./src/expansion/ft_expnd_squote.c\
+			./src/expansion/ft_expnd_txt.c\
+			./src/expansion/ft_isolate.c\
+			./src/expansion/ft_unify.c\
+			./src/lexer/ft_lexer.c\
 			./src/main/main.c\
-			./src/main/utils_main_1.c\
-			./src/main/utils_main_2.c\
-			./src/main/utils_main_3.c\
-			./src/main/utils_main_4.c\
+			./src/main/ft_check_space.c\
+			./src/main/ft_error_utils.c\
+			./src/main/ft_set_prompt.c\
+			./src/main/ft_start_shel.c\
 			./src/parser/ft_parser.c\
-			./src/parser/utils_parser_1.c\
-			./src/parser/utils_parser_2.c\
-			./src/utils/utils_1.c\
-			./src/utils/utils_2.c\
-			./src/utils/utils_3.c\
-			./src/utils/utils_split_pipe_1.c\
-			./src/utils/utils_split_pipe_2.c\
-
+			./src/parser/ft_heredoc.c\
+			./src/parser/ft_mountarg.c\
+			./src/parser/ft_prompt_split.c\
+			./src/parser/ft_setredir.c\
+			./src/parser/ft_skipquote.c\
+			./src/signals/ft_signal_handler.c\
+			./src/signals/ft_signal.c\
+		
 all: $(NAME)
 
 libft:

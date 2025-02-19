@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: penascim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: emorshhe <emorshhe>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:53:33 by penascim          #+#    #+#             */
-/*   Updated: 2023/11/10 20:03:05 by penascim         ###   ########.fr       */
+/*   Updated: 2025/02/17 09:56:16 by emorshhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
+
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -47,7 +49,9 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
+int	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-
+int	ft_strcmp(const char *s1, const char *s2);
+char	*ft_strncpy(char *dst, const char *src, size_t len);
+char	*ft_strndup(const char *s1, size_t n);
 #endif

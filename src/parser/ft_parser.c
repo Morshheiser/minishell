@@ -1,5 +1,5 @@
 #include "../../include/minishell.h"
-
+//ok
 void parse_input(char *line, t_shell *shell)
 {
     char **args;
@@ -7,10 +7,16 @@ void parse_input(char *line, t_shell *shell)
     int i;
 
     if (!line || !*line)
+    {
         return ;
+    }
+
     args = ft_split_with_set(line, "|");
     if (!args)
+    {
         return;
+    }
+
     i = 0;
     while (args[i])
     {
@@ -20,8 +26,10 @@ void parse_input(char *line, t_shell *shell)
             ft_clean_cmd(&shell->cmd);
             break;
         }
+
         ft_cmd_append(&shell->cmd, no);
         i++;
     }
+
     args = ft_clean_split(args);
 }
